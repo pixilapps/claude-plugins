@@ -1,0 +1,12 @@
+{
+  "name": "pixil",
+  "description": "Pixil's shared Claude Code commands",
+  "owner": { "name": "Pixil" },
+  "plugins": [
+    {
+      "name": "pixil",
+      "source": "./plugins/pixil",
+      "description": "PR flow for every repo: /pixil:pr, /pixil:review-pr, /pixil:triage-review, /pixil:setup-review"
+    }
+  ]
+}

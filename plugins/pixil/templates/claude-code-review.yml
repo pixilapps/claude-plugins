@@ -1,0 +1,54 @@
+name: Claude Code Review
+
+# Reviews a PR once, when it opens or leaves draft, with the pixil plugin's review-pr procedure
+# (pixilapps/claude-plugins) and this repo's REVIEW.md. Not on every push: a re-review after
+# /pixil:triage-review is `/pixil:review-pr <n>` in a new local session, so it reports only what
+# changed since the Triage outcomes record.
+on:
+  pull_request:
+    types: [opened, ready_for_review]
+
+jobs:
+  claude-review:
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: read
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # The review checks Pre-existing against the base branch and reads git history.
+          fetch-depth: 0
+
+      - name: Checkout the pixil plugin
+        uses: actions/checkout@v4
+        with:
+          repository: pixilapps/claude-plugins
+          # Any token that can read pixilapps/claude-plugins; set it once as an org secret.
+          token: ${{ secrets.PIXIL_FRAMEWORK_TOKEN }}
+          path: .pixil-plugins
+
+      - name: Run Claude Code Review
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            REPO: ${{ github.repository }}
+            PR NUMBER: ${{ github.event.pull_request.number }}
+
+            Read .pixil-plugins/plugins/pixil/commands/review-pr.md and follow it for this pull
+            request; the PR number above is its $ARGUMENTS. The criteria and the Project section
+            are in REVIEW.md. Ignore .pixil-plugins/ when listing the PR's files. You have no
+            Linear or Jira access: go by the PR body for the issue.
+
+            Posting the review is MANDATORY and is the last thing you do, even with nothing
+            found. If you run low on context, stop and post what you have. Post through `gh`
+            only; never return the review as a chat message.
+
+          claude_args: |
+            --allowedTools "Read,Glob,Grep,Write,Agent,Bash(gh pr view:*),Bash(gh pr diff:*),Bash(gh pr comment:*),Bash(gh api:*),Bash(gh repo view:*),Bash(gh issue view:*),Bash(git log:*),Bash(git blame:*),Bash(git show:*),Bash(git diff:*),Bash(git rev-parse:*),Bash(git merge-base:*)"

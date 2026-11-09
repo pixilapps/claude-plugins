@@ -1,0 +1,5 @@
+{
+  "name": "pixil",
+  "description": "PR flow for every repo: ship with cloud tests, independent review, triage. Per-repo values live in REVIEW.md › Project.",
+  "author": { "name": "Pixil" }
+}
