@@ -39,11 +39,15 @@ If a report says **Environment broken** with a GitHub 403 on `flutter-pixil-fram
 session at claude.ai/code instead, with the app and `pixilapps/flutter-pixil-framework` both
 selected, and paste the same prompt `/pixil:pr` printed.
 
-## CI (once per organization)
+## CI (once per repository)
 
-Actions secrets, at org level so every repository gets them: `CLAUDE_CODE_OAUTH_TOKEN`, and
-`PIXIL_FRAMEWORK_TOKEN` — a token that can read `pixilapps/claude-plugins` (the workflow checks
-the plugin out with it).
+Two Actions secrets on each repository: `CLAUDE_CODE_OAUTH_TOKEN` (`claude setup-token`), and
+`PIXIL_FRAMEWORK_TOKEN`, a token that can read `pixilapps/claude-plugins` (the workflow checks
+the plugin out with it). The org is on GitHub Free, where private repositories get organization
+secrets empty, so set them per repository:
+
+    gh secret set CLAUDE_CODE_OAUTH_TOKEN -R pixilapps/<repo>
+    gh secret set PIXIL_FRAMEWORK_TOKEN -R pixilapps/<repo>
 
 ## Changing the flow
 

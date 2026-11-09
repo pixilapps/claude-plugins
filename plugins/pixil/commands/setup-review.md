@@ -77,5 +77,6 @@ No mention of `/pixil:pr` yet: add a short **Pull Requests** section:
 ## 5. Report
 
 `git status --short`, every `TODO` left in `REVIEW.md`, and what's still needed outside the
-repository: the `CLAUDE_CODE_OAUTH_TOKEN` and `PIXIL_FRAMEWORK_TOKEN` Actions secrets (org-level
-covers every repository), and the cloud environment (once per person, not per repository).
+repository: the `CLAUDE_CODE_OAUTH_TOKEN` and `PIXIL_FRAMEWORK_TOKEN` Actions secrets on this
+repository (`gh secret list` shows which are missing; org secrets don't reach private repositories
+on GitHub Free), and the cloud environment (once per person, not per repository).

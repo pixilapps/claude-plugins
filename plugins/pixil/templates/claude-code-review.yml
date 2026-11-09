@@ -29,7 +29,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: pixilapps/claude-plugins
-          # Any token that can read pixilapps/claude-plugins; set it once as an org secret.
+          # Any token that can read pixilapps/claude-plugins, set on this repo: on GitHub Free,
+          # private repos get org secrets empty ("Input required and not supplied: token").
           token: ${{ secrets.PIXIL_FRAMEWORK_TOKEN }}
           path: .pixil-plugins
 
