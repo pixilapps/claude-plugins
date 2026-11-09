@@ -54,6 +54,9 @@ constitution. Keep it short: a line the repository can't break is noise.
   `${CLAUDE_PLUGIN_ROOT}/templates/claude-code-review.yml`.
 - It exists: show the developer how it differs from the template and ask before replacing it.
   Keep any test or build job it has; only the review job follows the template.
+- The review action runs only a workflow file identical to the default branch's copy. When the
+  base branch isn't the default branch (`develop` vs `main`), tell the developer the same file
+  must also land on the default branch, in a one-file PR, or the review skips itself.
 
 ## 3. `.claude/settings.json`
 
