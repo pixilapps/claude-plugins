@@ -29,17 +29,36 @@ developer asks for it in so many words.
 5. If the dependency manifest or lockfile changed, run Project › Dependencies and keep anything
    discontinued or with an advisory for the PR body. Report only; it never blocks.
 6. `git push -u origin HEAD`.
-7. Hand off. Cloud sessions can't load this plugin, so the test procedure travels in the prompt.
-   Print this for the developer to run in a second terminal, from this repository:
-
-       claude --cloud "$(cat '${CLAUDE_PLUGIN_ROOT}/cloud-test.md')
-
-       Branch: <branch>. Base: <base>."
-
-   It starts a cloud session on the environment picked with `/remote-env`, cloned at this branch.
+7. Hand off. Cloud sessions can't load this plugin, so the test procedure travels in the prompt:
+   `${CLAUDE_PLUGIN_ROOT}/cloud-test.md`, a blank line, then `Branch: <branch>. Base: <base>.`
    Add "Run the whole suite." after the base to run every test. The remote isn't on GitHub (cloud
    sessions clone and push only there): skip the hand-off, run Project › Test here, and keep its
    summary for the PR body's **Testing**.
+
+   - **No Project › Cloud repositories:** print this for the developer to run in a second
+     terminal, from this repository. It starts a cloud session on the environment picked with
+     `/remote-env`, cloned at this branch:
+
+         claude --cloud "$(cat '${CLAUDE_PLUGIN_ROOT}/cloud-test.md')
+
+         Branch: <branch>. Base: <base>."
+
+   - **Project › Cloud repositories names some:** a session reaches only the repositories
+     attached to it, and `claude --cloud` attaches one, so a private git dependency would not
+     install. Open claude.ai/code with this repository and those attached and the prompt typed
+     in; `<environment>` is Project › Cloud environment, or empty when there's none:
+
+         url=$(PIXIL_PROMPT="$(cat '${CLAUDE_PLUGIN_ROOT}/cloud-test.md')
+
+         Branch: <branch>. Base: <base>." \
+           PIXIL_REPOS="$(gh repo view --json nameWithOwner -q .nameWithOwner),<Cloud repositories, comma-separated>" \
+           PIXIL_ENV='<environment>' \
+           python3 -c 'import os, urllib.parse as u; e = os.environ; q = {"repositories": e["PIXIL_REPOS"], "prompt": e["PIXIL_PROMPT"]}; q.update({"environment": e["PIXIL_ENV"]} if e["PIXIL_ENV"] else {}); print("https://claude.ai/code?" + u.urlencode(q, quote_via=u.quote))')
+         open "$url" || echo "$url"
+
+     Tell the developer a browser tab opened with the repositories selected and the prompt typed
+     in: check the environment is the one with Flutter, and press Enter. `open` failed (not a
+     Mac): give them the printed link to open.
 8. Stop. Say that `/pixil:pr --finish` comes next, once the cloud session has pushed
    `test-report/<branch>`.
 

@@ -34,6 +34,10 @@ what you looked for.
 - **Languages:** the locales of the translation files (`*.arb`); mark ar, he, fa and ur as RTL.
   How to switch language on Android: from `CLAUDE.md` or the settings feature; else `TODO`.
 - **Large screens:** `rps dev-lab` if `pubspec.yaml` has that script, else `none`.
+- **Cloud repositories:** every `git:` dependency in `pubspec.yaml` whose URL is on `github.com`,
+  as `owner/repo`. None: drop the line.
+- **Cloud environment:** the environment's name if the developer gives it. Otherwise drop the
+  line; the browser then picks the environment, and the developer checks it before sending.
 - **Cross-file:** the folder where dependencies are registered (`get_it`/`injectable` setup), the
   router class and its generated file.
 - **Helpers to reuse:** the shared helpers `CLAUDE.md` tells people to use (number formatting,
