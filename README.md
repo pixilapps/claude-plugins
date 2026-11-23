@@ -5,7 +5,7 @@ One plugin, `pixil`, with the PR flow every Pixil repository uses:
 | Command | What it does |
 |---|---|
 | `/pixil:setup-review` | Once per repository: writes `REVIEW.md` (criteria + a **Project** section with that repo's commands), the CI review workflow, and the plugin in `.claude/settings.json`. |
-| `/pixil:pr` | Check and generate locally, push, print the `claude --cloud` command that runs the tests. |
+| `/pixil:pr` | Check and generate locally, push, start the cloud session that runs the tests. |
 | `/pixil:pr --finish` | Read the cloud test report, build, check screens on simulator and emulator, open the PR. |
 | `/pixil:review-pr <n>` | Independent review in a new session; posts one review, never approves. CI runs the same file when a PR opens. |
 | `/pixil:triage-review <n>` | Fix or answer every finding, resolve the threads, post the Triage outcomes record. |
@@ -35,9 +35,11 @@ At claude.ai/code → environment menu → new environment:
 Then `/remote-env` in your terminal and pick it. One environment serves every repository.
 
 A session reaches only the GitHub repositories attached to it, and `claude --cloud` attaches one.
-If a report says **Environment broken** with a GitHub 403 on `flutter-pixil-framework`, start the
-session at claude.ai/code instead, with the app and `pixilapps/flutter-pixil-framework` both
-selected, and paste the same prompt `/pixil:pr` printed.
+So a repository with a private git dependency (`pixilapps/flutter-pixil-framework`) names it in
+`REVIEW.md` › Project › **Cloud repositories**. `/pixil:pr` then opens claude.ai/code with all of
+them attached and the test prompt typed in; check the environment and press Enter. Name the
+environment in **Cloud environment** and it's preselected too. Without the line, `/pixil:pr`
+prints a `claude --cloud` command as before.
 
 ## CI (once per repository)
 

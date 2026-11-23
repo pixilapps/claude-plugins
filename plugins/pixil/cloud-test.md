@@ -15,7 +15,8 @@ Run Project › Install (Flutter: `flutter pub get`). `flutter` not found: the e
 setup script is missing (it's `cloud-setup.sh` in the `pixil` plugin). Install fails: skip to
 step 5 and report **Environment broken** with the last lines of the error. For Flutter the usual
 cause is a private git dependency (`pixilapps/flutter-pixil-framework`) this session can't
-reach, or a host missing from the environment's allowed domains.
+reach, because it isn't attached (`REVIEW.md` › Project › **Cloud repositories** must name it),
+or a host missing from the environment's allowed domains.
 
 ## 2. Branch
 

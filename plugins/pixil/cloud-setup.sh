@@ -4,7 +4,7 @@
 # `flutter pub get` itself (cloud-test.md), since packages differ per repo.
 # ponytail: no set -e — a failed step still lets the session start, so cloud-test.md
 # reports "Environment broken" instead of a session that never opens.
-FLUTTER_VERSION=3.47.9 # keep in step with `flutter --version` on the team's Macs
+FLUTTER_VERSION=3.50.0 # keep in step with `flutter --version` on the team's Macs
 [ -x /opt/flutter/bin/flutter ] ||
   git clone --depth 1 --branch "$FLUTTER_VERSION" https://github.com/flutter/flutter.git /opt/flutter
 git config --system --add safe.directory /opt/flutter

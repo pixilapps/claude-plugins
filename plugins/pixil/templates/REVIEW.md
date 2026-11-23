@@ -19,6 +19,10 @@ got wrong, and replace every `TODO`.
   `{}`); {{`rps gen` | `dart run build_runner build -d`}} when a route or generated model changed
 - **Test:** `flutter test`
 - **Dependencies:** `flutter pub outdated` (report only)
+- **Cloud repositories:** {{each private GitHub repository the app pulls in as a git dependency,
+  `owner/repo`, comma-separated: the cloud test session needs it attached}}
+- **Cloud environment:** {{the claude.ai/code environment with Flutter, by name, for `/pixil:pr`
+  to preselect}}
 - **Build:** `flutter build apk --debug --flavor {{develop}} -t {{lib/main/main_develop.dart}} {{--dart-define-from-file=app_env/jsonFiles/devEnv.json}}`;
   `flutter build ios --debug --simulator` with the same flavor, target and define
 - **Run:** `flutter run -d <id>` with the same flavor, target and define; dev app id `{{com.pixilapps.app.dev}}`
